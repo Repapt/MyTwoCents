@@ -1,0 +1,14 @@
+{
+    "name": "Chair",
+    "version": "0.0.1",
+    "description": "Hack the North 2018 Project",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "activeTab"
+    ],
+    "manifest_version": 2
+}
+
