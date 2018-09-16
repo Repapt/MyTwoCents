@@ -29,7 +29,7 @@ const displayProduct = (product) => {
     } else if (product['price'] > 100) {
         product['rating'] = Math.floor(Math.random() * 2) + 4;
     } else if (product['price'] > 50) {
-        product['rating'] = Math.floor(Math.random() * 3) + 5 
+        product['rating'] = Math.floor(Math.random() * 3) + 5
     } else {
         product['rating'] = Math.floor(Math.random() * 3) + 6;
     }
@@ -96,6 +96,35 @@ const amazonGetInfo = (product) => {
     }
 }
 
+const amazonGetInfoUs = (product) => {
+
+    var priceElement = document.evaluate('//span[contains(@id,"dealprice")]/text()', document, null, XPathResult.ANY_TYPE, null).iterateNext();
+    priceElement = priceElement ? priceElement : document.evaluate('//span[contains(@id,"saleprice")]/text()', document, null, XPathResult.ANY_TYPE, null).iterateNext();
+    priceElement = priceElement ? priceElement : document.evaluate('//span[contains(@id,"ourprice")]/text()', document, null, XPathResult.ANY_TYPE, null).iterateNext();
+    var priceStr = priceElement.nodeValue;
+
+    const priceRegex = /\$\W*?(\d+\.\d+)/g;
+    let matches = priceRegex.exec(priceStr);
+    console.log(matches)
+    let price = matches[1];
+
+    const convertURL = "https://xecdapi.xe.com/v1/convert_from.json/?from=USD&to=CAD&amount="
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', convertURL + price, true);
+    xhr.setRequestHeader("Authorization", "Basic " + btoa("twocents983088923:6u0vb3uq9v5m2ll6q16qepecvr"))
+    xhr.responseType = 'json';
+    xhr.onload = function () {
+        var status = xhr.status;
+        if (status === 200) {
+            console.log(xhr.response);
+            product["price"] = xhr.response['to'][0]['mid'].toFixed(2);
+            displayProduct(product);
+        }
+    }
+    xhr.send();
+}
+
 const shopifyGetInfo = (product) => {
     getJSON(window.location.href + '.json', (status, response) => {
         if (response) {
@@ -117,6 +146,11 @@ const getPrice = () => {
         case "www.amazon.ca":
         case "www.amazon.co.uk":
             amazonGetInfo(product);
+            products.push(product);
+            gotPrice = true;
+            break;
+        case "www.amazon.com":
+            amazonGetInfoUs(product);
             products.push(product);
             gotPrice = true;
             break;
