@@ -1,0 +1,21 @@
+.green {
+    background-color: green
+}
+
+.yellow {
+    background-color: yellow
+}
+
+.red {
+    background-color: red
+}
+
+meter::-webkit-meter-bar { /* Color of background */
+    background: #acacac;
+}
+meter::-webkit-meter-optimum-value { /* Color within low-high range */
+    background: green;
+}
+meter::-webkit-meter-suboptimum-value { /* Color outside low-high range */
+    background:red;
+}

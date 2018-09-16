@@ -3,10 +3,19 @@ var products = [];
 const displayProducts = () => {
     console.log(products);
     for (product of products) {
+        var productDiv = document.createElement('div');
         var node = document.createElement('p');
-        var textnode = document.createTextNode(product.price);
+        var textnode = document.createTextNode('$' + product['price'] + " CAD - " + product['rating']);
         node.appendChild(textnode);
-        document.getElementById('root').appendChild(node);
+        productDiv.appendChild(node);
+        var meterNode = document.createElement('meter')
+        meterNode.min = "0";
+        meterNode.low = "4";
+        meterNode.high = "10";
+        meterNode.max = "10"
+        meterNode.value = product['rating'];
+        productDiv.appendChild(meterNode);
+        document.getElementById('root').appendChild(productDiv);
     }
 }
 
