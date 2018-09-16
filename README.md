@@ -17,3 +17,4 @@ technical
 https://www.xe.com/xecurrencydata/XE_Currency_Data_API_Specifications.pdf
 
 non technical
+https://www.xe.com/xecurrencydata/XE_Currency_Data_API_Non_Technical_Quick_Start_Guide.pdf
